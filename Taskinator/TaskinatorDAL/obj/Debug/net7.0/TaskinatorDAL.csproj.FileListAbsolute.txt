@@ -1,0 +1,14 @@
+C:\Users\robot\source\repos\TaskinatorApplication\Taskinator\TaskinatorDAL\bin\Debug\net7.0\TaskinatorDAL.deps.json
+C:\Users\robot\source\repos\TaskinatorApplication\Taskinator\TaskinatorDAL\bin\Debug\net7.0\TaskinatorDAL.runtimeconfig.json
+C:\Users\robot\source\repos\TaskinatorApplication\Taskinator\TaskinatorDAL\bin\Debug\net7.0\TaskinatorDAL.dll
+C:\Users\robot\source\repos\TaskinatorApplication\Taskinator\TaskinatorDAL\bin\Debug\net7.0\TaskinatorDAL.pdb
+C:\Users\robot\source\repos\TaskinatorApplication\Taskinator\TaskinatorDAL\obj\Debug\net7.0\TaskinatorDAL.csproj.AssemblyReference.cache
+C:\Users\robot\source\repos\TaskinatorApplication\Taskinator\TaskinatorDAL\obj\Debug\net7.0\TaskinatorDAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\robot\source\repos\TaskinatorApplication\Taskinator\TaskinatorDAL\obj\Debug\net7.0\TaskinatorDAL.AssemblyInfoInputs.cache
+C:\Users\robot\source\repos\TaskinatorApplication\Taskinator\TaskinatorDAL\obj\Debug\net7.0\TaskinatorDAL.AssemblyInfo.cs
+C:\Users\robot\source\repos\TaskinatorApplication\Taskinator\TaskinatorDAL\obj\Debug\net7.0\TaskinatorDAL.csproj.CoreCompileInputs.cache
+C:\Users\robot\source\repos\TaskinatorApplication\Taskinator\TaskinatorDAL\obj\Debug\net7.0\TaskinatorDAL.dll
+C:\Users\robot\source\repos\TaskinatorApplication\Taskinator\TaskinatorDAL\obj\Debug\net7.0\refint\TaskinatorDAL.dll
+C:\Users\robot\source\repos\TaskinatorApplication\Taskinator\TaskinatorDAL\obj\Debug\net7.0\TaskinatorDAL.pdb
+C:\Users\robot\source\repos\TaskinatorApplication\Taskinator\TaskinatorDAL\obj\Debug\net7.0\TaskinatorDAL.genruntimeconfig.cache
+C:\Users\robot\source\repos\TaskinatorApplication\Taskinator\TaskinatorDAL\obj\Debug\net7.0\ref\TaskinatorDAL.dll
