@@ -25,7 +25,7 @@ namespace TaskinatorDAL.Models
         
 
         
-        public ICollection<Department> Departments { get; set; }
-        public ICollection<Job> Jobs { get; set; } 
+        //public ICollection<Department> Departments { get; set; }
+        //public ICollection<Job> Jobs { get; set; } 
     }
  }

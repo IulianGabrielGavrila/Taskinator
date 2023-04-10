@@ -10,7 +10,7 @@ namespace TaskinatorDAL.Models
 
     public enum Status
     {
-        Working, Testing, Finished
+       Working, Testing, Finished
     }
     public class Task_Table
     {

@@ -12,8 +12,10 @@ namespace TaskinatorDAL.ICRUD
         Employee GetEmployeeById(int? id);
         int CreateEmployee(Employee employee);
         Employee GetEmployeeEdit(int? id);
-        int EditEmployee(Employee employee);
+        int EditEmployee(Employee employee, int? id);
         Employee GetDeleteEmployee(int? id);
-        int DeleteEmployee(Employee employee);
+        int DeleteEmployeeConfirmed(int? id);
+
+
     }
 }

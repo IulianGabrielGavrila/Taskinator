@@ -6,7 +6,7 @@ using TaskinatorDAL.DBContext;
 using TaskinatorDAL.Models;
 using TaskinatorBLL.Interfaces;
 
-namespace TaskinatorBLL
+namespace TaskinatorBLL.Implementations
 {
     public class EmployeeBL : IEmployeeService
     {
@@ -24,27 +24,27 @@ namespace TaskinatorBLL
 
         public int CreateEmployee(Employee employee)
         {
-            return employeeRepository.Create(employee);
+            return employeeRepository.CreateEmployee(employee);
         }
 
         public Employee EditEmployee(int? id)
         {
-            return employeeRepository.EmployeeEdit(id);
+            return employeeRepository.GetEmployeeEdit(id);
         }
 
         public int EditEmployee(Employee employee, int id)
         {
-            return employeeRepository.Edit(employee, id);
+            return employeeRepository.EditEmployee(employee, id);
         }
 
         public Employee DeleteEmployee(int? id)
         {
-            return employeeRepository.EmployeeDelete(id);
+            return employeeRepository.GetDeleteEmployee(id);
         }
 
         public int DeleteConfirmedEmployee(int id)
         {
-            return employeeRepository.DeleteConfirmed(id);
+            return employeeRepository.DeleteEmployeeConfirmed(id);
         }
 
         /*public void Dispose()

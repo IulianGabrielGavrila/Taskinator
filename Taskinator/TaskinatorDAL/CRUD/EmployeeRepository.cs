@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaskinatorDAL.DBContext;
+using TaskinatorDAL.ICRUD;
 using TaskinatorDAL.Models;
 
 
 namespace TaskinatorDAL.CRUD
 {
-    public class EmployeeRepository
+    public class EmployeeRepository : IEmployeeRepository
     {
         private readonly TaskinatorMVCContext _context;
         public EmployeeRepository(TaskinatorMVCContext context)
@@ -36,7 +37,7 @@ namespace TaskinatorDAL.CRUD
 
         
        
-        public int Create(Employee employee)
+        public int CreateEmployee(Employee employee)
         {
             
                 _context.Add(employee);
@@ -47,7 +48,7 @@ namespace TaskinatorDAL.CRUD
         }
 
         // GET: Employees/Edit/5
-        public Employee EmployeeEdit(int? id)
+        public Employee GetEmployeeEdit(int? id)
         {
             if (id == null || _context.Employees == null)
             {
@@ -63,7 +64,7 @@ namespace TaskinatorDAL.CRUD
         }
 
         
-        public int Edit(Employee employee, int id)
+        public int EditEmployee(Employee employee, int? id)
         {
             if (id != employee.ID)
             {
@@ -91,7 +92,7 @@ namespace TaskinatorDAL.CRUD
         }
 
         // GET: Employees/Delete/5
-        public Employee EmployeeDelete(int? id)
+        public Employee GetDeleteEmployee(int? id)
         {
             if (id == null || _context.Employees == null)
             {
@@ -109,7 +110,7 @@ namespace TaskinatorDAL.CRUD
         }
 
         
-        public int DeleteConfirmed(int id)
+        public int DeleteEmployeeConfirmed(int? id)
         {
             if (_context.Employees == null)
             {
