@@ -28,6 +28,6 @@ namespace TaskinatorDAL.Models
 
         //data
 
-        public DateOnly creation_Date { get; set; }
+        public DateTime Creation_Date { get; set; }
     }
 }

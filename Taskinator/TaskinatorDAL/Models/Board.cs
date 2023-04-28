@@ -13,15 +13,15 @@ namespace TaskinatorDAL.Models //Classlibrary project!!!!!
         //
 
         //date creare board
-        public DateOnly creation_date { get; set; }
+        public DateTime Creation_Date { get; set; }
 
         //string description
-        public string description { get; set; }
+        public string Description { get; set; }
 
         //lista taskuri
-        public int task_id { get; set; }
+        public int Task_id { get; set; }
 
-        public ICollection<Task_Table> Tasks { get; set; }
+        //public ICollection<Task_Table> Tasks { get; set; }
 
 
 

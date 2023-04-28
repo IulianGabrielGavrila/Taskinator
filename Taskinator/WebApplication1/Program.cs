@@ -8,6 +8,7 @@ using TaskinatorDAL.DBContext;
 using TaskinatorDAL.ICRUD;
 using TaskinatorBLL.Implementations;
 using TaskinatorBLL.Interfaces;
+using TaskinatorDAL.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,13 @@ builder.Services.AddSession(options =>
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    SeedData.Initialize(services);
+}
 
 // Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())

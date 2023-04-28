@@ -17,10 +17,37 @@ namespace TaskinatorDAL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("TaskinatorDAL.Models.Board", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<DateTime>("Creation_Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Task_id")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Boards");
+                });
 
             modelBuilder.Entity("TaskinatorDAL.Models.Department", b =>
                 {
@@ -30,18 +57,13 @@ namespace TaskinatorDAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int?>("EmployeeID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("EmployeeID");
-
-                    b.ToTable("Department");
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("TaskinatorDAL.Models.Employee", b =>
@@ -91,39 +113,42 @@ namespace TaskinatorDAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int?>("EmployeeID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("EmployeeID");
-
-                    b.ToTable("Job");
+                    b.ToTable("Jobs");
                 });
 
-            modelBuilder.Entity("TaskinatorDAL.Models.Department", b =>
+            modelBuilder.Entity("TaskinatorDAL.Models.Task_Table", b =>
                 {
-                    b.HasOne("TaskinatorDAL.Models.Employee", null)
-                        .WithMany("Departments")
-                        .HasForeignKey("EmployeeID");
-                });
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-            modelBuilder.Entity("TaskinatorDAL.Models.Job", b =>
-                {
-                    b.HasOne("TaskinatorDAL.Models.Employee", null)
-                        .WithMany("Jobs")
-                        .HasForeignKey("EmployeeID");
-                });
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-            modelBuilder.Entity("TaskinatorDAL.Models.Employee", b =>
-                {
-                    b.Navigation("Departments");
+                    b.Property<int>("Board_ID")
+                        .HasColumnType("int");
 
-                    b.Navigation("Jobs");
+                    b.Property<int?>("Difficulty")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("creation_Date")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Tasks");
                 });
 #pragma warning restore 612, 618
         }
