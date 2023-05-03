@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TaskinatorBLL.Implementations;
 using TaskinatorDAL.CRUD;
 using TaskinatorDAL.DBContext;
 using TaskinatorDAL.Models;
@@ -98,7 +99,7 @@ namespace Taskinator.Controllers
                     return NotFound();
                 }
 
-                return View(employee);
+                return View("/Views/Employees/Edit.cshtml");
             }
             catch (Exception ex)
             {
