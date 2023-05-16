@@ -17,6 +17,11 @@ namespace TaskinatorBLL.Implementations
             employeeRepository = new EmployeeRepository(context);
         }
 
+        public Task<List<Employee>> Index()
+        {
+            return employeeRepository.Index();
+        }
+
         public Employee GetEmployeeById(int? id)
         {
             return employeeRepository.GetEmployeeById(id);

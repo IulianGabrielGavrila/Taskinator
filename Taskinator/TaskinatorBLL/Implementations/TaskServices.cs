@@ -19,6 +19,10 @@ namespace TaskinatorBLL.Implementations
             taskRepository = new TaskRepository(context);
         }
 
+        public Task<List<Task_Table>> Index()
+        {
+            return taskRepository.Index();
+        }
         public Task_Table GetTaskById(int? id)
         {
             return taskRepository.GetTaskById(id);
@@ -33,6 +37,12 @@ namespace TaskinatorBLL.Implementations
         {
             return taskRepository.GetTaskById(id);
         }
+
+        public List<Task_Table> GetTasksByBoardId(int? boardId)
+        {
+            return taskRepository.GetTasksByBoardId(boardId);
+        }
+
 
         public int EditTask(Task_Table task, int id)
         {

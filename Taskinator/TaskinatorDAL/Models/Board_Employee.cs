@@ -1,4 +1,7 @@
-﻿namespace TaskinatorDAL.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace TaskinatorDAL.Models
 {
     public enum User_role
     {
@@ -6,10 +9,11 @@
     }
     public class Board_Employee
     {
-        
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         public Employee Employee { get; set; }
 
-        //Board_ID
         public Board Board { get; set; }
 
         //Rol user board(enum: creator,developer,tester)

@@ -10,7 +10,8 @@ namespace TaskinatorDAL.ICRUD
     public interface IBoardRepository
     {
         Board GetBoardById(int? id);
-        int CreateBoard(Board board);
+        Task<List<Board>> Index();
+        int CreateBoard(Board board);     
         Board GetBoardEdit(int? id);
         int EditBoard(Board board, int? id);
         Board GetDeleteBoard(int? id);

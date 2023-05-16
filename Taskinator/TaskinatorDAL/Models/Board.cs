@@ -19,12 +19,15 @@ namespace TaskinatorDAL.Models //Classlibrary project!!!!!
         public string Description { get; set; }
 
         //lista taskuri
-        public int Task_id { get; set; }
+        //public int Task_id { get; set; }
 
-        //public string Creator { get; set; }
+        public string Creator { get; set; }
 
-        //public ICollection<Task_Table> Tasks { get; set; }
+        public ICollection<Task_Table> Tasks { get; set; }
 
+        
+
+        
 
 
 

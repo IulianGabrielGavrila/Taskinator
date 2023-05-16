@@ -10,6 +10,7 @@ namespace TaskinatorDAL.ICRUD
     public interface IEmployeeRepository
     {
         Employee GetEmployeeById(int? id);
+        Task<List<Employee>> Index();
         int CreateEmployee(Employee employee);
         Employee GetEmployeeEdit(int? id);
         int EditEmployee(Employee employee, int? id);

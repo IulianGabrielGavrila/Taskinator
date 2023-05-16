@@ -5,6 +5,8 @@ using TaskinatorDAL.CRUD;
 using TaskinatorDAL.DBContext;
 using TaskinatorDAL.ICRUD;
 using TaskinatorDAL.Models;
+using Microsoft.Extensions.Logging;
+
 
 namespace Taskinator.Controllers
 {
@@ -12,16 +14,31 @@ namespace Taskinator.Controllers
     {
         private readonly TaskinatorMVCContext _context;
         private readonly BoardRepository _boardRepository;
-        public BoardsController(TaskinatorMVCContext context)
+        private readonly TaskRepository _taskRepository;
+        private readonly BoardEmployeeRepository _boardEmployeeRepository;
+        private readonly EmployeeRepository _employeeRepository;
+        private readonly ILogger<BoardsController> _logger;
+        public BoardsController(TaskinatorMVCContext context, ILogger<BoardsController> logger)
         {
             _context = context;
             _boardRepository = new BoardRepository(_context);
+            _taskRepository = new TaskRepository(_context);
+            _employeeRepository = new EmployeeRepository(_context);
+            _boardEmployeeRepository = new BoardEmployeeRepository(_context, _employeeRepository, _boardRepository);
+
+            _logger = logger;
         }
+
         public async Task<IActionResult> Index()
         {
-            return _context.Boards != null ?
-                        View(await _context.Boards.ToListAsync()) :
-                        Problem("Entity set 'TaskinatorContext.Board'  is null.");
+            var boards = await _boardRepository.Index();
+
+            if (boards == null)
+            {
+                return NotFound();
+            }
+
+            return View(boards);
         }
         public IActionResult Details(int? id)
         {
@@ -39,20 +56,31 @@ namespace Taskinator.Controllers
                     return NotFound();
                 }
 
+                var tasks = _taskRepository.GetTasksByBoardId(id);
+                board.Tasks = tasks;
+
+                var employees = _boardEmployeeRepository.GetEmployeesByBoard(id);
+
+                ViewData["Tasks"] = tasks;
+                ViewData["Employees"] = employees;
+
+
                 return View(board);
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"An error occurred while retrieving board details for ID {id}");
                 return Problem($"An error occurred while retrieving board details: {ex.Message}");
             }
         }
+
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Name,Creation_Date,Description,Task_id")] Board board)
+        public IActionResult Create([Bind("Name,Creation_Date,Description,Creator")] Board board)
         {
             try
             {
@@ -95,7 +123,7 @@ namespace Taskinator.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("ID,Name,Creation_Date,Description,Task_id")] Board board)
+        public IActionResult Edit(int id, [Bind("ID,Name,Creation_Date,Description,Creator")] Board board)
         {
             try
             {

@@ -7,8 +7,6 @@ using TaskinatorDAL.DBContext;
 
 //TODO: Schimba la toate modelele in TaskinatorDAL
 namespace TaskinatorDAL.Models;
-
-
 public static class SeedData
 {
 
@@ -32,7 +30,8 @@ public static class SeedData
                     Department_ID = 1,
                     Job_ID = 2,
                     Username = "JohnPopescu",
-                    Password = "Paroladenespart123"
+                    Password = "Paroladenespart123",
+                    Email = "ionpopescu27@email.com"
                 },
                 new Employee
                 {
@@ -43,7 +42,8 @@ public static class SeedData
                     Department_ID = 2,
                     Job_ID = 1,
                     Username = "GeGe",
-                    Password = "GeGeGeorge"
+                    Password = "GeGeGeorge",
+                    Email = "geogege@email.com"
                 },
                 new Employee
                 {
@@ -54,7 +54,8 @@ public static class SeedData
                     Department_ID = 3,
                     Job_ID = 3,
                     Username = "AlexAdminu",
-                    Password = "SefulAdmin"
+                    Password = "SefulAdmin",
+                    Email = "alexadminul1@gmail.com"
                 },
                 new Employee
                 {
@@ -65,7 +66,8 @@ public static class SeedData
                     Department_ID = 3,
                     Job_ID = 2,
                     Username = "AngajatulNou",
-                    Password = "paroladeangajatnou"
+                    Password = "paroladeangajatnou",
+                    Email = "emailangajatnou@email.com"
                 }
                 );
             
@@ -106,7 +108,7 @@ public static class SeedData
                     Name = "SeededBoard",
                     Creation_Date = DateTime.Now,
                     Description = "Acesta este un board generat manual",
-                    Task_id = 1
+                    Creator = "alexadminul1@gmail.com"
 
                 }
                 );

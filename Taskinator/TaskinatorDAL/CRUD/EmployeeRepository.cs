@@ -19,8 +19,17 @@ namespace TaskinatorDAL.CRUD
             _context = context;
         }
 
+        public  Task<List<Employee>>Index()
+        {
+            var employees =  _context.Employees.ToListAsync();
+            if (employees == null)
+            {
+                throw new Exception("TaskinatorContext.Employee is null.");
+            }
+            return employees;
+        }
 
-        
+
         public Employee GetEmployeeById(int? id)
         {
             if (id == null || _context.Employees == null)

@@ -6,6 +6,7 @@ namespace TaskinatorBLL.Interfaces
     public interface IEmployeeService
     {
         Employee GetEmployeeById(int? id);
+        Task<List<Employee>> Index();
         int CreateEmployee(Employee employee);
         Employee EditEmployee(int? id);
         Employee DeleteEmployee(int? id);

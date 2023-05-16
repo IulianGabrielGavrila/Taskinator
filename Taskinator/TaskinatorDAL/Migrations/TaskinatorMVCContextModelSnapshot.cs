@@ -33,6 +33,10 @@ namespace TaskinatorDAL.Migrations
                     b.Property<DateTime>("Creation_Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Creator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -41,12 +45,35 @@ namespace TaskinatorDAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Task_id")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
 
                     b.ToTable("Boards");
+                });
+
+            modelBuilder.Entity("TaskinatorDAL.Models.Board_Employee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BoardID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EmployeeID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("User_role")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BoardID");
+
+                    b.HasIndex("EmployeeID");
+
+                    b.ToTable("board_Employees");
                 });
 
             modelBuilder.Entity("TaskinatorDAL.Models.Department", b =>
@@ -76,6 +103,10 @@ namespace TaskinatorDAL.Migrations
 
                     b.Property<int>("Department_ID")
                         .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -130,8 +161,14 @@ namespace TaskinatorDAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
+                    b.Property<int?>("BoardID")
+                        .HasColumnType("int");
+
                     b.Property<int>("Board_ID")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("Creation_Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("Difficulty")
                         .HasColumnType("int");
@@ -143,12 +180,42 @@ namespace TaskinatorDAL.Migrations
                     b.Property<int?>("Status")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("creation_Date")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("ID");
 
+                    b.HasIndex("BoardID");
+
                     b.ToTable("Tasks");
+                });
+
+            modelBuilder.Entity("TaskinatorDAL.Models.Board_Employee", b =>
+                {
+                    b.HasOne("TaskinatorDAL.Models.Board", "Board")
+                        .WithMany()
+                        .HasForeignKey("BoardID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TaskinatorDAL.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Board");
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("TaskinatorDAL.Models.Task_Table", b =>
+                {
+                    b.HasOne("TaskinatorDAL.Models.Board", null)
+                        .WithMany("Tasks")
+                        .HasForeignKey("BoardID");
+                });
+
+            modelBuilder.Entity("TaskinatorDAL.Models.Board", b =>
+                {
+                    b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618
         }

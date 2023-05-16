@@ -19,10 +19,16 @@ namespace TaskinatorBLL.Implementations
             boardRepository = new BoardRepository(context);
         }
 
+        public Task<List<Board>> Index()
+        {
+            return boardRepository.Index();
+        }
         public Board GetBoardById(int? id)
         {
             return boardRepository.GetBoardById(id);
         }
+
+
 
         public int CreateBoard(Board board)
         {

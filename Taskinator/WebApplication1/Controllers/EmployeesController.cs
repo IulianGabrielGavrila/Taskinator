@@ -25,10 +25,16 @@ namespace Taskinator.Controllers
         // GET: Employees
         public async Task<IActionResult> Index()
         {
-            return _context.Employees != null ?
-                        View(await _context.Employees.ToListAsync()) :
-                        Problem("Entity set 'TaskinatorContext.Employee'  is null.");
+            var employees = await _employeeRepository.Index();
+
+            if (employees == null)
+            {
+                return NotFound();
+            }
+
+            return View(employees);
         }
+
 
         // GET: Employees/Details/5
         public IActionResult Details(int? id)
@@ -64,7 +70,7 @@ namespace Taskinator.Controllers
         // POST: Employees/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("LastName,FirstName,Role,Department_ID,Job_ID,Username,Password")] Employee employee)
+        public IActionResult Create([Bind("LastName,FirstName,Role,Department_ID,Job_ID,Username,Password,Email")] Employee employee)
         {
             try
             {
@@ -110,7 +116,7 @@ namespace Taskinator.Controllers
         // POST: Employees/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("ID,LastName,FirstName,Role,Department_ID,Job_ID,Username,Password")] Employee employee)
+        public IActionResult Edit(int id, [Bind("ID,LastName,FirstName,Role,Department_ID,Job_ID,Username,Password,Email")] Employee employee)
         {
             try
             {

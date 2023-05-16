@@ -23,9 +23,14 @@ namespace Taskinator.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            return _context.Tasks != null ?
-                        View(await _context.Tasks.ToListAsync()) :
-                        Problem("Entity set 'TaskinatorContext.Task'  is null.");
+            var tasks = await _taskRepository.Index();
+
+            if (tasks == null)
+            {
+                return NotFound();
+            }
+
+            return View(tasks);
         }
         public IActionResult Details(int? id)
         {
@@ -98,7 +103,7 @@ namespace Taskinator.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("ID,Name,Creation_Date,Description,Task_id")] Task_Table task)
+        public IActionResult Edit(int id, [Bind("ID,Name,Creation_Date,Description,Creator")] Task_Table task)
         {
             try
             {

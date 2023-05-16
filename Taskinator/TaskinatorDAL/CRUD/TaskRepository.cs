@@ -17,6 +17,17 @@ namespace TaskinatorDAL.CRUD
         {
             _context = context;
         }
+
+        public Task<List<Task_Table>> Index()
+        {
+            var tasks = _context.Tasks.ToListAsync();
+            if (tasks == null)
+            {
+                throw new Exception("TaskinatorContext.Tasks is null.");
+            }
+            return tasks;
+        }
+
         public Task_Table GetTaskById(int? id)
         {
             if (id == null || _context.Tasks == null)
@@ -39,9 +50,11 @@ namespace TaskinatorDAL.CRUD
 
 
         }
+
+        
         public Task_Table GetTaskEdit(int? id)
         {
-            if (id == null || _context.Boards == null)
+            if (id == null || _context.Tasks == null)
             {
                 throw new ArgumentNullException();
             }
@@ -52,6 +65,17 @@ namespace TaskinatorDAL.CRUD
                 throw new ArgumentNullException();
             }
             return task;
+        }
+        public List<Task_Table> GetTasksByBoardId(int? boardId)
+        {
+            if (boardId == null || _context.Tasks == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            List<Task_Table> tasks = _context.Tasks.Where(m => m.Board_ID == boardId).ToList();
+
+            return tasks;
         }
         public int EditTask(Task_Table task, int? id)
         {

@@ -16,6 +16,7 @@ namespace TaskinatorDAL.DBContext
         public DbSet<Department> Departments { get; set; }
         public DbSet<Task_Table> Tasks { get; set; }
         public DbSet<Board> Boards { get; set; }
+        public DbSet<Board_Employee> board_Employees { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

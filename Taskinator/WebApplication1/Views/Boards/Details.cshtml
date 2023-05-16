@@ -1,6 +1,8 @@
 ﻿@model TaskinatorDAL.Models.Board
+@using TaskinatorDAL.Models
 @{
     ViewData["Title"] = "Details";
+    
 }
 
 <h1>Details</h1>
@@ -28,12 +30,76 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Task_id)
+            @Html.DisplayNameFor(model => model.Creator)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Task_id)
+            @Html.DisplayFor(model => model.Creator)
         </dd>
     </dl>
+</div>
+<div style="height: 300px; overflow-y: scroll;">
+    <h4>Tasks</h4>
+    <hr />
+    @if (Model.Tasks.Count == 0)
+    {
+        <p>No tasks found.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Difficulty</th>
+                    <th>Status</th>
+                    <th>Creation Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var task in Model.Tasks)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => task.Name)</td>
+                        <td>@task.Difficulty</td>
+                        <td>@task.Status</td>
+                        <td>@task.Creation_Date</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+<div>
+    <h4>Board Members</h4>
+    <hr />
+    @if (ViewData["Employees"] == null || ((List<TaskinatorDAL.Models.Board_Employee>)ViewData["Employees"]).Count == 0)
+    {
+        <p>No employees found.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>LastName</th>
+                    <th>FirstName</th>
+                    <th>Email</th>
+                    <th>User Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var board_employee in (List<TaskinatorDAL.Models.Board_Employee>)ViewData["Employees"])
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => board_employee.Employee.LastName)</td>
+                        <td>@Html.DisplayFor(modelItem => board_employee.Employee.FirstName)</td>
+                        <td>@Html.DisplayFor(modelItem => board_employee.Employee.Email)</td>
+                        <td>@Html.DisplayFor(modelItem => board_employee.User_role)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |

@@ -9,14 +9,26 @@ using TaskinatorDAL.ICRUD;
 using TaskinatorDAL.Models;
 
 
+
 namespace TaskinatorDAL.CRUD
 {
     public class BoardRepository :IBoardRepository
     {
         private readonly TaskinatorMVCContext _context;
+        private readonly TaskRepository _taskRepository;
         public BoardRepository(TaskinatorMVCContext context)
         {
             _context = context;
+        }
+
+        public Task<List<Board>> Index()
+        {
+            var boards = _context.Boards.ToListAsync();
+            if (boards == null)
+            {
+                throw new Exception("TaskinatorContext.Boards is null.");
+            }
+            return boards;
         }
         public Board GetBoardById(int? id)
         {
@@ -97,6 +109,8 @@ namespace TaskinatorDAL.CRUD
 
             return board;
         }
+
+    
 
         public int DeleteBoardConfirmed(int? id)
         {

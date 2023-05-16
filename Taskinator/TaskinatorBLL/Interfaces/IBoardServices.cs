@@ -10,6 +10,7 @@ namespace TaskinatorBLL.Interfaces
     public interface IBoardService
     {
         Board GetBoardById(int? id);
+        Task<List<Board>> Index();
         int CreateBoard(Board board);
         Board EditBoard(int? id);
         Board DeleteBoard(int? id);
