@@ -11,6 +11,8 @@ namespace TaskinatorBLL.Interfaces
     {
         Board GetBoardById(int? id);
         Task<List<Board>> Index();
+        Task<List<Board>> InactiveIndex();
+        int ReactivateBoard(Board board, int? id);
         int CreateBoard(Board board);
         Board EditBoard(int? id);
         Board DeleteBoard(int? id);

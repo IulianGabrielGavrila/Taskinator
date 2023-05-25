@@ -24,7 +24,10 @@ namespace TaskinatorDAL.Models
 
         //id catre board
 
+        public string BoardName { get; set; }
         public int Board_ID { get; set; }
+
+        //obiect de tip board
 
         //data
 

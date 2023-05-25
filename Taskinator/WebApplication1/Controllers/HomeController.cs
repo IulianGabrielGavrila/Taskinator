@@ -27,6 +27,10 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
+        public IActionResult Dashboard()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {
@@ -54,7 +58,7 @@ namespace WebApplication1.Controllers
                     {
                         HttpContext.Session.SetString("UserID", obj.ID.ToString());
                         HttpContext.Session.SetString("UserName", obj.Username.ToString());
-                        return Redirect("https://localhost:8080/employees");
+                        return RedirectToAction("Dashboard");
                         // return View(employee);
                     }
                 }

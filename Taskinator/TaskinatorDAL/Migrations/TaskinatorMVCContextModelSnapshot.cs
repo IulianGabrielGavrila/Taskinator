@@ -37,6 +37,9 @@ namespace TaskinatorDAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("Deactivation_Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -163,6 +166,10 @@ namespace TaskinatorDAL.Migrations
 
                     b.Property<int?>("BoardID")
                         .HasColumnType("int");
+
+                    b.Property<string>("BoardName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Board_ID")
                         .HasColumnType("int");

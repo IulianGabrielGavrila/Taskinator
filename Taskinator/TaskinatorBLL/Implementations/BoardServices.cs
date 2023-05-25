@@ -23,6 +23,14 @@ namespace TaskinatorBLL.Implementations
         {
             return boardRepository.Index();
         }
+        public Task<List<Board>> InactiveIndex()
+        {
+            return boardRepository.InactiveIndex();
+        }
+        public int ReactivateBoard(Board board, int? id)
+        {
+            return boardRepository.ReactivateBoard(board, id);
+        }
         public Board GetBoardById(int? id)
         {
             return boardRepository.GetBoardById(id);

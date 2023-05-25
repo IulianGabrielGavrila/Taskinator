@@ -61,11 +61,24 @@ namespace Taskinator.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Name,Difficulty,Status,Board_ID,Creation_Date")] Task_Table task)
+        public IActionResult Create([Bind("Name,Difficulty,Status,BoardName")] Task_Table task)
         {
             try
             {
                 //if (ModelState.IsValid)
+
+                task.Creation_Date= DateTime.Now;
+
+                var boards = _context.Boards.ToList(); // Retrieve all boards from the database
+
+                foreach (var board in boards)
+                {
+                    if (board.Name == task.BoardName)
+                    {                  
+                        task.Board_ID = board.ID;
+                        break; 
+                    }
+                }
 
                 _taskRepository.CreateTask(task);
                 return RedirectToAction(nameof(Index));
@@ -94,7 +107,7 @@ namespace Taskinator.Controllers
                     return NotFound();
                 }
 
-                return View(task);
+                return View("/Views/Tasks/Edit.cshtml");
             }
             catch (Exception ex)
             {
@@ -103,7 +116,7 @@ namespace Taskinator.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("ID,Name,Creation_Date,Description,Creator")] Task_Table task)
+        public IActionResult Edit(int id, [Bind("ID,Name,Difficulty,Status,BoardName")] Task_Table task)
         {
             try
             {
@@ -111,9 +124,20 @@ namespace Taskinator.Controllers
                 {
                     return NotFound();
                 }
+                var boards = _context.Boards.ToList(); // Retrieve all boards from the database
+
+                foreach (var board in boards)
+                {
+                    if (board.Name == task.BoardName)
+                    {
+                        task.Board_ID = board.ID;
+                        break;
+                    }
+                }
 
                 //if (ModelState.IsValid)
                 {
+                    
                     _taskRepository.EditTask(task, id);
                     return RedirectToAction(nameof(Index));
                 }

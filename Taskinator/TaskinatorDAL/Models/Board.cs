@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TaskinatorDAL.Models //Classlibrary project!!!!!
+namespace TaskinatorDAL.Models 
 {
     public class Board
     {
@@ -14,6 +14,8 @@ namespace TaskinatorDAL.Models //Classlibrary project!!!!!
 
         //date creare board
         public DateTime Creation_Date { get; set; }
+
+        public DateTime? Deactivation_Date { get; set; }
 
         //string description
         public string Description { get; set; }

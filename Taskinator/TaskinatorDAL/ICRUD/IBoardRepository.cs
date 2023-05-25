@@ -11,6 +11,8 @@ namespace TaskinatorDAL.ICRUD
     {
         Board GetBoardById(int? id);
         Task<List<Board>> Index();
+        Task<List<Board>> InactiveIndex();
+        int ReactivateBoard(Board board, int? id);
         int CreateBoard(Board board);     
         Board GetBoardEdit(int? id);
         int EditBoard(Board board, int? id);

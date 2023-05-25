@@ -40,6 +40,36 @@ namespace Taskinator.Controllers
 
             return View(boards);
         }
+        public async Task<IActionResult> InactiveIndex()
+        {
+            var boards = await _boardRepository.InactiveIndex();
+
+            if (boards == null)
+            {
+                return NotFound();
+            }
+
+            return View(boards);
+        }
+        public IActionResult Reactivate(Board board, int id)
+        {
+            try
+            {
+                board = _boardRepository.GetBoardById(id);
+                if (board == null)
+                {
+                    return NotFound();
+                }
+
+                _boardRepository.ReactivateBoard(board, id); // Call ReactivateBoard method
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                return Problem($"An error occurred while reactivating the board: {ex.Message}");
+            }
+        }
         public IActionResult Details(int? id)
         {
             try
@@ -64,6 +94,7 @@ namespace Taskinator.Controllers
                 ViewData["Tasks"] = tasks;
                 ViewData["Employees"] = employees;
 
+                
 
                 return View(board);
             }
@@ -80,12 +111,12 @@ namespace Taskinator.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Name,Creation_Date,Description,Creator")] Board board)
+        public IActionResult Create([Bind("Name,Description,Creator")] Board board)
         {
             try
             {
                 //if (ModelState.IsValid)
-                
+                    board.Creation_Date = DateTime.Now;
                     _boardRepository.CreateBoard(board);
                     return RedirectToAction(nameof(Index));
                 
@@ -123,7 +154,7 @@ namespace Taskinator.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("ID,Name,Creation_Date,Description,Creator")] Board board)
+        public IActionResult Edit(int id, [Bind("ID,Name,Description,Creator")] Board board)
         {
             try
             {
@@ -172,6 +203,7 @@ namespace Taskinator.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
+            
             try
             {
                 _boardRepository.DeleteBoardConfirmed(id);

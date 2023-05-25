@@ -1,13 +1,16 @@
 ﻿@model IEnumerable<TaskinatorDAL.Models.Board>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Boards";
 }
 
-<h1>Index</h1>
+<h1>Boards</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
+</p>
+<p>
+    <a asp-action="InactiveIndex">See Inactive Boards</a>
 </p>
 <table class="table">
     <thead>

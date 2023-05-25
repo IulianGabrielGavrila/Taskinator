@@ -23,12 +23,37 @@ namespace TaskinatorDAL.CRUD
 
         public Task<List<Board>> Index()
         {
-            var boards = _context.Boards.ToListAsync();
+            var boards = _context.Boards.Where(b => b.Deactivation_Date == null).ToListAsync();
             if (boards == null)
             {
                 throw new Exception("TaskinatorContext.Boards is null.");
             }
+
             return boards;
+        }
+        public Task<List<Board>> InactiveIndex()
+        {
+            var boards = _context.Boards.Where(b => b.Deactivation_Date != null).ToListAsync();
+            if (boards == null)
+            {
+                throw new Exception("TaskinatorContext.Boards is null.");
+            }
+
+            return boards;
+        }
+        public int ReactivateBoard(Board board, int? id) 
+        {
+            if (id == null || _context.Boards == null) 
+            {
+                throw new ArgumentNullException();
+            }
+
+            board.Deactivation_Date = null;
+
+            _context.Update(board); 
+            _context.SaveChanges();
+
+            return board.ID;
         }
         public Board GetBoardById(int? id)
         {
@@ -119,14 +144,22 @@ namespace TaskinatorDAL.CRUD
                 throw new InvalidOperationException("Entity set 'TaskinatorContext.Board'  is null.");
             }
             var board = _context.Boards.Find(id);
+            if (HasTasks(board))
+            {
+                throw new InvalidOperationException("Cannot delete a board with tasks.");
+            }
             if (board != null)
             {
-                _context.Boards.Remove(board);
+                board.Deactivation_Date = DateTime.Now;
             }
 
             _context.SaveChanges();
             return board.ID;
         }
+        private bool HasTasks(Board board)
+{
+    return _context.Tasks.Any(t => t.Board_ID == board.ID);
+}
         private bool BoardExists(int id)
         {
             return (_context.Boards?.Any(e => e.ID == id)).GetValueOrDefault();
