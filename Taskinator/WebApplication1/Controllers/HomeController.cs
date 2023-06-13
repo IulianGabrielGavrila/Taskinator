@@ -12,10 +12,12 @@ namespace WebApplication1.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly TaskinatorMVCContext _dbContext;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+
         }
 
         public IActionResult Index()
@@ -29,6 +31,12 @@ namespace WebApplication1.Controllers
         }
         public IActionResult Dashboard()
         {
+            
+            string userName = HttpContext.Session.GetString("UserName");
+
+            
+            ViewBag.UserName = userName;
+
             return View();
         }
 
@@ -78,5 +86,14 @@ namespace WebApplication1.Controllers
                 return RedirectToAction("Login");
             }
         }
+
+        public IActionResult Logout()
+        {
+            
+            HttpContext.Session.Clear();
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

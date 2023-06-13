@@ -154,28 +154,29 @@ namespace Taskinator.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("ID,Name,Description,Creator")] Board board)
+        public IActionResult Edit(int id, Board updatedBoard)
         {
             try
             {
-                if (id != board.ID)
+                var existingBoard = _boardRepository.GetBoardById(id);
+                if (existingBoard == null)
                 {
                     return NotFound();
                 }
 
-                //if (ModelState.IsValid)
-                {
-                    _boardRepository.EditBoard(board, id);
-                    return RedirectToAction(nameof(Index));
-                }
+                existingBoard.Name = updatedBoard.Name;
+                existingBoard.Description = updatedBoard.Description;
+                existingBoard.Creator = updatedBoard.Creator;
 
-                //return View(board);
+                _boardRepository.EditBoard(existingBoard, id);
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
                 return Problem($"An error occurred while editing the board: {ex.Message}");
             }
         }
+
         public IActionResult Delete(int? id)
         {
             try

@@ -17,7 +17,7 @@ namespace TaskinatorDAL.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
-        public string Name { get; set; } 
+        public string TaskName { get; set; } 
         public Difficulty? Difficulty { get; set; }
 
         public Status? Status { get; set; }

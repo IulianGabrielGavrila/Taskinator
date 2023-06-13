@@ -55,13 +55,16 @@ namespace Taskinator.Controllers
                 return Problem($"An error occurred while retrieving task details: {ex.Message}");
             }
         }
-        public IActionResult Create()
+        public IActionResult Create(Board model)
         {
-            return View();
+            var task = new Task_Table();
+            task.Board_ID = model.ID;
+            task.BoardName = model.Name;
+            return View(task);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Name,Difficulty,Status,BoardName")] Task_Table task)
+        public IActionResult Create([Bind("TaskName,Difficulty,Status,BoardName")] Task_Table task)
         {
             try
             {
@@ -69,16 +72,20 @@ namespace Taskinator.Controllers
 
                 task.Creation_Date= DateTime.Now;
 
-                var boards = _context.Boards.ToList(); // Retrieve all boards from the database
+                //var boards = _context.Boards.ToList(); // Retrieve all boards from the database
 
-                foreach (var board in boards)
+                
+                
+                /*foreach (var board in boards)
                 {
                     if (board.Name == task.BoardName)
                     {                  
                         task.Board_ID = board.ID;
                         break; 
                     }
-                }
+                }*/
+
+                
 
                 _taskRepository.CreateTask(task);
                 return RedirectToAction(nameof(Index));
@@ -116,33 +123,33 @@ namespace Taskinator.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("ID,Name,Difficulty,Status,BoardName")] Task_Table task)
+        public IActionResult Edit(int id, Task_Table updatedTask)
         {
             try
             {
-                if (id != task.ID)
+                var existingTask = _taskRepository.GetTaskById(id);
+                if (existingTask == null)
                 {
                     return NotFound();
                 }
-                var boards = _context.Boards.ToList(); // Retrieve all boards from the database
 
+                existingTask.TaskName = updatedTask.TaskName;
+                existingTask.Difficulty = updatedTask.Difficulty;
+                existingTask.Status = updatedTask.Status;
+                existingTask.BoardName = updatedTask.BoardName;
+
+                var boards = _context.Boards.ToList();
                 foreach (var board in boards)
                 {
-                    if (board.Name == task.BoardName)
+                    if (board.Name == existingTask.BoardName)
                     {
-                        task.Board_ID = board.ID;
+                        existingTask.Board_ID = board.ID;
                         break;
                     }
                 }
 
-                //if (ModelState.IsValid)
-                {
-                    
-                    _taskRepository.EditTask(task, id);
-                    return RedirectToAction(nameof(Index));
-                }
-
-                //return View(task);
+                _taskRepository.EditTask(existingTask, id);
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
